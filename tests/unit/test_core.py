@@ -59,20 +59,24 @@ class TestBuildBaseParams:
     """Tests for _build_base_params."""
 
     def test_onsite_mode_uses_onsite_settings(self, settings: Settings) -> None:
-        params = _build_base_params(settings, mode="onsite")
+        params = _build_base_params(settings, mode="onsite", country_indeed="India")
         assert params["results_wanted"] == settings.onsite_results_wanted
         assert params["job_type"] == settings.onsite_job_type
-        assert params["country_indeed"] == settings.onsite_country_indeed
+        assert params["country_indeed"] == "India"
 
     def test_remote_mode_uses_remote_settings(self, settings: Settings) -> None:
-        params = _build_base_params(settings, mode="remote")
+        params = _build_base_params(settings, mode="remote", country_indeed="USA")
         assert params["results_wanted"] == settings.remote_results_wanted
         assert params["is_remote"] is True
-        assert params["country_indeed"] == settings.remote_country_indeed
+        assert params["country_indeed"] == "USA"
 
-    def test_verbose_is_two(self, settings: Settings) -> None:
+    def test_country_indeed_omitted_when_empty(self, settings: Settings) -> None:
         params = _build_base_params(settings, mode="onsite")
-        assert params["verbose"] == 2
+        assert "country_indeed" not in params
+
+    def test_verbose_is_zero(self, settings: Settings) -> None:
+        params = _build_base_params(settings, mode="onsite")
+        assert params["verbose"] == 0
 
     def test_proxy_list_included_when_set(self, settings: Settings) -> None:
         settings.proxy_list = ["http://proxy1:8080", "http://proxy2:8080"]
@@ -226,7 +230,7 @@ class TestDeduplicator:
         assert can is False
         assert "already sent" in reason.lower()
 
-    def test_domain_cooldown_30_days(self, dedup: Deduplicator) -> None:
+    def test_same_domain_different_company_allowed(self, dedup: Deduplicator) -> None:
         dedup.mark_sent(
             email="hr@acme.com",
             domain="acme.com",
@@ -236,10 +240,11 @@ class TestDeduplicator:
             location="Delhi",
             is_remote=False,
         )
-        # Different email, same domain — should be rejected
-        can, reason = dedup.can_send("jobs@acme.com", "acme.com", "Acme2")
-        assert can is False
-        assert "domain" in reason.lower()
+        # Different email + different company on the same domain: allowed
+        # (cooldown is company-based on the same day, not domain-based)
+        can, reason = dedup.can_send("jobs@acme.com", "acme.com", "OtherCorp")
+        assert can is True
+        assert reason == ""
 
     def test_company_same_day_cooldown(self, dedup: Deduplicator) -> None:
         dedup.mark_sent(

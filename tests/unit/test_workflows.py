@@ -101,6 +101,7 @@ class TestBaseWorkflow:
         self, mock_scrape, mock_dedup_cls, mock_storage, mock_report
     ) -> None:
         mock_scrape.return_value = FakeScrapeResult(jobs=pd.DataFrame())
+        mock_storage.return_value.get_pending_jobs.return_value = []
         settings = _make_settings()
         wf = self._get_workflow_cls()(settings)
 
@@ -130,8 +131,9 @@ class TestBaseWorkflow:
         mock_report,
         mock_time,
     ) -> None:
-        mock_time.monotonic.side_effect = [0.0, 10.0]
+        mock_time.monotonic.return_value = 0.0
         mock_time.sleep = MagicMock()
+        mock_storage.return_value.get_pending_jobs.return_value = []
         mock_storage.return_value.add_scraped_jobs.return_value = 2
         df = _make_dataframe(1)
         mock_scrape.return_value = FakeScrapeResult(jobs=df)
@@ -165,8 +167,9 @@ class TestBaseWorkflow:
         mock_report,
         mock_time,
     ) -> None:
-        mock_time.monotonic.side_effect = [0.0, 5.0]
+        mock_time.monotonic.return_value = 0.0
         mock_time.sleep = MagicMock()
+        mock_storage.return_value.get_pending_jobs.return_value = []
         mock_storage.return_value.add_scraped_jobs.return_value = 2
         df = _make_dataframe(1)
         mock_scrape.return_value = FakeScrapeResult(jobs=df)
@@ -216,7 +219,8 @@ class TestBaseWorkflow:
         mock_report,
         mock_time,
     ) -> None:
-        mock_time.monotonic.side_effect = [0.0, 5.0]
+        mock_time.monotonic.return_value = 0.0
+        mock_storage.return_value.get_pending_jobs.return_value = []
         mock_storage.return_value.add_scraped_jobs.return_value = 2
         df = _make_dataframe(1)
         mock_scrape.return_value = FakeScrapeResult(jobs=df)
@@ -246,7 +250,8 @@ class TestBaseWorkflow:
         mock_report,
         mock_time,
     ) -> None:
-        mock_time.monotonic.side_effect = [0.0, 5.0]
+        mock_time.monotonic.return_value = 0.0
+        mock_storage.return_value.get_pending_jobs.return_value = []
         mock_storage.return_value.add_scraped_jobs.return_value = 2
         df = _make_dataframe(1)
         mock_scrape.return_value = FakeScrapeResult(jobs=df)
@@ -277,8 +282,9 @@ class TestBaseWorkflow:
         mock_report,
         mock_time,
     ) -> None:
-        mock_time.monotonic.side_effect = [0.0, 10.0]
+        mock_time.monotonic.return_value = 0.0
         mock_time.sleep = MagicMock()
+        mock_storage.return_value.get_pending_jobs.return_value = []
         mock_storage.return_value.add_scraped_jobs.return_value = 2
         # 5 jobs but max_emails = 2
         df = _make_dataframe(5)
@@ -313,7 +319,8 @@ class TestBaseWorkflow:
         mock_report,
         mock_time,
     ) -> None:
-        mock_time.monotonic.side_effect = [0.0, 5.0]
+        mock_time.monotonic.return_value = 0.0
+        mock_storage.return_value.get_pending_jobs.return_value = []
         mock_storage.return_value.add_scraped_jobs.return_value = 2
         df = _make_dataframe(1)
         mock_scrape.return_value = FakeScrapeResult(jobs=df)
@@ -370,8 +377,9 @@ class TestBaseWorkflow:
         mock_report,
         mock_time,
     ) -> None:
-        mock_time.monotonic.side_effect = [0.0, 10.0]
+        mock_time.monotonic.return_value = 0.0
         mock_time.sleep = MagicMock()
+        mock_storage.return_value.get_pending_jobs.return_value = []
         mock_storage.return_value.add_scraped_jobs.return_value = 2
         df = _make_dataframe(2)
         mock_scrape.return_value = FakeScrapeResult(jobs=df)

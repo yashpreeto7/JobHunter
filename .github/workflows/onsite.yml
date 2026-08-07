@@ -78,7 +78,7 @@ jobs:
           CONTACT_CODOLIO: ${{ secrets.CONTACT_CODOLIO }}
           RESUME_DRIVE_LINK: ${{ secrets.RESUME_DRIVE_LINK }}
           # --- Files (decoded above) ---
-          RESUME_FILE_PATH: Manansinh.pdf
+          RESUME_FILE_PATH: Resume_.pdf
           CONTEXT_FILE_PATH: contexts/profile.md
           # --- Storage ---
           STORAGE_BACKEND: ${{ secrets.STORAGE_BACKEND }}
