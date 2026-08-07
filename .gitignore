@@ -35,6 +35,7 @@ Thumbs.db
 # Credentials
 *.json
 !render.yaml
+!Resume_.pdf
 
 # Private applicant context (contains personal info)
 contexts/

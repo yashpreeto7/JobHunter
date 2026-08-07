@@ -102,7 +102,7 @@ class Deduplicator:
             "location": location,
             "is_remote": str(is_remote),
             "subject": subject,
-            "body_preview": body_preview[:200] if body_preview else "",
+            "body_preview": body_preview if body_preview else "",
             "mode": mode,
             "word_count": str(word_count),
         }
