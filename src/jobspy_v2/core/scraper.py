@@ -31,6 +31,46 @@ logger = logging.getLogger(__name__)
 # We prioritise job_type+is_remote over hours_old to get relevant results.
 INDEED_EXCLUSIVE_PARAMS = {"hours_old", "job_type", "is_remote", "easy_apply"}
 
+# jobspy matches job_type against exact enum values (e.g. "fulltime").
+# Map common human-spelled variants to the canonical values jobspy accepts so
+# a config like "Full-Time" doesn't fail every scrape task.
+JOB_TYPE_ALIASES: dict[str, str] = {
+    "fulltime": "fulltime",
+    "full time": "fulltime",
+    "full-time": "fulltime",
+    "full_time": "fulltime",
+    "parttime": "parttime",
+    "part time": "parttime",
+    "part-time": "parttime",
+    "part_time": "parttime",
+    "contract": "contract",
+    "contractor": "contractor",
+    "temporary": "temporary",
+    "temp": "temporary",
+    "internship": "internship",
+    "intern": "internship",
+    "perdiem": "perdiem",
+    "per diem": "perdiem",
+    "nights": "nights",
+    "summer": "summer",
+    "volunteer": "volunteer",
+    "other": "other",
+}
+
+VALID_JOB_TYPES: frozenset[str] = frozenset(JOB_TYPE_ALIASES.values())
+
+
+def _normalize_job_type(job_type: str) -> str | None:
+    """Return a jobspy-accepted job type value, or None if unrecognized.
+
+    Handles case, whitespace and punctuation variants ("Full-Time" → "fulltime").
+    None lets the caller drop the filter rather than failing the scrape task.
+    """
+    key = " ".join(job_type.strip().lower().split())
+    key = key.replace("_", " ").replace("-", " ")
+    key = " ".join(key.split())
+    return JOB_TYPE_ALIASES.get(key, key if key in VALID_JOB_TYPES else None)
+
 
 @dataclass(frozen=True)
 class ScrapeResult:
@@ -73,7 +113,15 @@ def _build_base_params(settings: Settings, mode: str, country_indeed: str = "") 
 
     job_type = getattr(settings, f"{prefix}_job_type", None)
     if job_type:
-        params["job_type"] = job_type
+        normalized = _normalize_job_type(job_type)
+        if normalized:
+            params["job_type"] = normalized
+        else:
+            logger.warning(
+                "[%s] Unrecognized job type %r dropped — scraping without filter",
+                mode,
+                job_type,
+            )
 
     is_remote = getattr(settings, f"{prefix}_is_remote", False)
     if is_remote:

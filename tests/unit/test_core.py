@@ -78,6 +78,17 @@ class TestBuildBaseParams:
         params = _build_base_params(settings, mode="onsite")
         assert params["verbose"] == 0
 
+    def test_job_type_variants_normalized(self, settings: Settings) -> None:
+        for variant in ("Full-Time", "full time", "FULL_TIME", "Fulltime"):
+            settings.onsite_job_type = variant
+            params = _build_base_params(settings, mode="onsite")
+            assert params["job_type"] == "fulltime"
+
+    def test_invalid_job_type_dropped(self, settings: Settings) -> None:
+        settings.onsite_job_type = "permanent"
+        params = _build_base_params(settings, mode="onsite")
+        assert "job_type" not in params
+
     def test_proxy_list_included_when_set(self, settings: Settings) -> None:
         settings.proxy_list = ["http://proxy1:8080", "http://proxy2:8080"]
         params = _build_base_params(settings, mode="onsite")
