@@ -134,8 +134,14 @@ def _scrape_single(
             logger.debug("  → %d results from %s", len(df), board)
             return df
         logger.debug("  → 0 results from %s", board)
-    except Exception:
-        logger.warning("  → Error scraping %s for '%s' in %s", board, term, location)
+    except Exception as exc:  # noqa: BLE001
+        logger.warning(
+            "  → Error scraping %s for '%s' in %s: %s",
+            board,
+            term,
+            location,
+            exc,
+        )
     return None
 
 
@@ -157,6 +163,29 @@ def scrape_jobs(settings: Settings, mode: str) -> ScrapeResult:
         locations: list[str] = settings.onsite_locations
     else:
         locations: list[str] = settings.remote_locations
+
+    logger.info(
+        "[%s] Resolved config → %d search terms, %d locations, %d board(s)",
+        mode,
+        len(search_terms),
+        len(locations),
+        len(boards),
+    )
+
+    # Guard against empty config — fail loudly instead of silently reporting success.
+    if not search_terms:
+        raise ValueError(
+            f"[{mode}] No {prefix.upper()}_SEARCH_TERMS configured — cannot scrape. "
+            f"Set the variable (e.g. in .env or GitHub Secrets)."
+        )
+    if not locations:
+        raise ValueError(
+            f"[{mode}] No {prefix.upper()}_LOCATIONS configured — cannot scrape."
+        )
+    if not boards:
+        raise ValueError(
+            f"[{mode}] No {prefix.upper()}_JOB_BOARDS configured — cannot scrape."
+        )
 
     # Get countries for Indeed (remote mode supports multiple)
     countries_indeed = _get_countries_indeed(settings, mode)
