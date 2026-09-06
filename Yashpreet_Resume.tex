@@ -1,0 +1,170 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{latexsym}
+\usepackage[margin=0.5in, top=0.4in, bottom=0.5in]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{fontawesome}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[none]{hyphenat}
+\usepackage{graphicx}
+
+
+\pagestyle{empty}
+\setlength{\tabcolsep}{0in}
+\titleformat{\section}
+  {\vspace{2pt}\scshape\raggedright\large}
+  {}{0em}{}[\vspace{2pt}\color{gray}\titlerule\vspace{-6pt}]
+
+
+\newcommand{\resumeItem}[2]{
+  \item\small{
+    \textbf{#1}{: #2}
+  }
+}
+
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{1pt}\item
+    \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}
+}
+
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}}
+\renewcommand{\labelitemii}{$\circ$}
+
+
+\begin{document}
+
+
+%----------HEADING-----------------
+\begin{center}
+\begin{minipage}{0.82\textwidth}
+  \centering
+  {\LARGE \textbf{Yashpreet}} \\[2pt]
+  \href{mailto:yash09preet@gmail.com}{yash09preet@gmail.com}
+  $|$
+  \href{https://github.com/yashpreeto7}{github.com/yashpreeto7}
+  $|$
+  \href{https://www.linkedin.com/in/yashpreeto7}{linkedin.com/in/yashpreeto7}
+\end{minipage}
+\end{center}
+
+
+%-----------SUMMARY-----------------
+\section{Summary}
+\vspace{-4pt}
+\begin{flushleft}
+\normalsize Final-year CS student at VIT Bhopal (CGPA 8.47/10) with hands-on full-stack development across the
+MERN stack and real AI integrations. Built a \textbf{nutrition platform with AI-powered food
+photo recognition}, and automated my own job applications with a Python pipeline. Looking for SDE /
+full-stack roles where I can contribute immediately.
+\end{flushleft}
+
+
+%-----------EDUCATION-----------------
+\section{Education}
+\vspace{-4pt}
+\begin{flushleft}
+  \hspace{1.5em}
+  \resumeSubheading
+    {B.Tech in Computer Science and Engineering}{Expected 2026}
+    {VIT Bhopal University, Bhopal}{CGPA: 8.47/10}
+\end{flushleft}
+
+
+% -----------TECHNICAL SKILLS-----------------
+\section{Technical Skills}
+\vspace{-4pt}
+\hspace{1.5em}
+\begin{flushleft}
+\textbf{Languages:} Python, JavaScript, TypeScript, Java, C++ \\[4pt]
+\textbf{Frontend:} React, Redux Toolkit, Next.js, HTML5, CSS3, Tailwind CSS, Material UI, styled-components \\[4pt]
+\textbf{Backend:} Node.js, Express.js, FastAPI, REST APIs, Mongoose, JWT, bcrypt \\[4pt]
+\textbf{Databases:} MongoDB, MySQL, SQLite \\[4pt]
+\textbf{AI / Tools \& Cloud:} OpenRouter, Google Gemini, Git, GitHub Actions (CI/CD), AWS (digital badges), Cloudinary, pandas
+\end{flushleft}
+
+
+%-----------PROJECTS-----------------
+\section{Projects}
+
+
+\textbf{MacroLens Vision AI} \hfill \textit{MERN, MongoDB, JWT, OpenRouter Vision} \\[-5pt]
+
+
+\noindent\makebox[1.5em][l]{--}%
+\parbox[t]{\dimexpr\linewidth-1.5em\relax}{%
+Full-stack fitness and nutrition platform --- meal logging, 1,014-food Indian nutrition database, workout tracking, and calorie-burn estimation.} \\[0pt]
+
+
+\noindent\makebox[1.5em][l]{--}%
+\parbox[t]{\dimexpr\linewidth-1.5em\relax}{%
+Designed a \textbf{serving-aware nutrition engine}: every food stores structured serving metadata (unit, grams, default), and the API computes calories/macros from the selected serving weight instead of generic unit conversion.} \\[0pt]
+
+
+\noindent\makebox[1.5em][l]{--}%
+\parbox[t]{\dimexpr\linewidth-1.5em\relax}{%
+Integrated \textbf{image-based food recognition} via a vision-capable model through \textbf{OpenRouter} (model-agnostic gateway): users upload meal photos, the backend validates image type/size, enforces a strict JSON schema, and validates returned nutrition before logging.} \\[0pt]
+
+
+\noindent\makebox[1.5em][l]{--}%
+\parbox[t]{\dimexpr\linewidth-1.5em\relax}{%
+Implemented \textbf{JWT authentication (bcrypt)}, MongoDB \textbf{text-index search} with regex fallback, daily-totals \textbf{aggregation pipelines}, and ownership-checked log edits/deletes.} \\[6pt]
+
+
+\textbf{Pal-AI} \hfill \textit{Next.js, OpenRouter, Node.js, MongoDB} \\[-5pt]
+
+
+\noindent\makebox[1.5em][l]{--}%
+\parbox[t]{\dimexpr\linewidth-1.5em\relax}{%
+AI companion platform routing \textbf{frontier LLMs through OpenRouter}, enabling provider-switchable responses from a single config change --- no backend rewrites.} \\[0pt]
+
+
+\noindent\makebox[1.5em][l]{--}%
+\parbox[t]{\dimexpr\linewidth-1.5em\relax}{%
+Persistent multi-turn memory: sessions and messages stored in MongoDB and injected as context, with token-aware \textbf{context windowing and summarization} for long conversations.} \\[0pt]
+
+
+\noindent\makebox[1.5em][l]{--}%
+\parbox[t]{\dimexpr\linewidth-1.5em\relax}{%
+Secure backend: \textbf{JWT authentication, rate limiting, error handling}, and input guardrails on all chat routes.} \\[6pt]
+
+
+\textbf{DocDispatch} \hfill \textit{React, Tailwind CSS} \\[-5pt]
+
+
+\noindent\makebox[1.5em][l]{--}%
+\parbox[t]{\dimexpr\linewidth-1.5em\relax}{%
+Role-based \textbf{healthcare portal} (providers and patients): appointment workflows, notifications, dashboards, and fully responsive interfaces.} \\[0pt]
+
+
+\noindent\makebox[1.5em][l]{--}%
+\parbox[t]{\dimexpr\linewidth-1.5em\relax}{%
+Accessibility-first: semantic HTML, \textbf{ARIA attributes}, keyboard navigation and focus management --- audited for screen-reader and keyboard-only users.} \\[0pt]
+
+
+\noindent\makebox[1.5em][l]{--}%
+\parbox[t]{\dimexpr\linewidth-1.5em\relax}{%
+Built a reusable component library (auth context, modals, tables, stat cards) to keep multiple screens consistent.} \\[4pt]
+
+
+%-----------ACHIEVEMENTS & CERTIFICATIONS-----------------
+\section{Achievements \& Certifications}
+\begin{itemize}[leftmargin=*]
+\item Ranked \textbf{Top 1\%} nationally in NPTEL Marketing Analytics (2025).
+\item Earned multiple \textbf{AWS Cloud Digital Badges} demonstrating proficiency across core cloud services.
+\item Certified in \href{https://courses.ibmcep.cognitiveclass.ai/certificates/ebd0a0cde11f49fd85e0585514c8a752}{\underline{Blockchain Development}} (IBM),
+\href{https://coursera.org/share/c47bf1223e7454e273d86e44a50fb76a}{\underline{Computer Networking}} (Google),
+and \underline{MERN Full Stack} (Ethnus).
+\end{itemize}
+
+
+\end{document}

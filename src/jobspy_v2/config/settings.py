@@ -63,7 +63,7 @@ class Settings(BaseSettings):
 
     # -- Context & Resume ---------------------------------------------------
     context_file_path: str = "contexts/profile.md"
-    resume_file_path: str = "Resume_.pdf"
+    resume_file_path: str = "Yashpreet_Resume.pdf"
 
     # -- Storage ------------------------------------------------------------
     storage_backend: Literal["sheets", "csv"] = "sheets"
