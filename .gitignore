@@ -36,6 +36,7 @@ Thumbs.db
 *.json
 !render.yaml
 !Yashpreet_Resume.pdf
+*.tex
 
 # Private applicant context (contains personal info)
 contexts/
